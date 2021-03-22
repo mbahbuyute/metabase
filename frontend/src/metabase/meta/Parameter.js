@@ -163,7 +163,7 @@ export const PARAMETER_OPTIONS: ParameterOption[] = [
 function buildOperatorSubtypeOptions({ section, operatorType, sectionName }) {
   return PARAMETER_OPERATOR_TYPES[operatorType].map(option => ({
     ...option,
-    combinedName: `${sectionName} - ${option.name}`,
+    combinedName: `${sectionName} ${option.name.toLowerCase()}`,
     type: `${section}/${option.operator}`,
   }));
 }
