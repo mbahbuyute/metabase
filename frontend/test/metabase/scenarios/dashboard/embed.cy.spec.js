@@ -98,6 +98,6 @@ var iframeUrl = METABASE_SITE_URL + "/embed/dashboard/" + token + "#bordered=tru
 
     // confirm text box and filter are still there
     cy.findByText("text text text");
-    cy.findByPlaceholderText("Category - Matches exactly");
+    cy.findByPlaceholderText("Category");
   });
 });

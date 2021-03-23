@@ -160,14 +160,14 @@ describe("scenarios > dashboard > chained filter", () => {
         .parent()
         .within(() => {
           // turn on the toggle
-          cy.findByText("Location - Matches exactly")
+          cy.findByText("Location")
             .parent()
             .within(() => {
               cy.get("a").click();
             });
 
           // open up the list of linked columns
-          cy.findByText("Location - Matches exactly").click();
+          cy.findByText("Location").click();
           // It's hard to assert on the "table.column" pairs.
           // We just assert that the headers are there to know that something appeared.
           cy.findByText("Filtering column");
@@ -179,7 +179,7 @@ describe("scenarios > dashboard > chained filter", () => {
 
       // now test that it worked!
       // Select Alaska as a state. We should see Anchorage as a option but not Anacoco
-      cy.findByText("Location - Matches exactly").click();
+      cy.findByText("Location").click();
       popover().within(() => {
         cy.findByText("AK").click();
         cy.findByText("Add filter").click();

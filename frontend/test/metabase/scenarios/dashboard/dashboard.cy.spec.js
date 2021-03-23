@@ -86,7 +86,7 @@ describe("scenarios > dashboard", () => {
 
     cy.log("Assert that the selected filter is present in the dashboard");
     cy.icon("location");
-    cy.findByText("Location - Matches exactly");
+    cy.findByText("Location");
   });
 
   it("should add a question", () => {
