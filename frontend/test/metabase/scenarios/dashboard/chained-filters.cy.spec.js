@@ -124,7 +124,7 @@ describe("scenarios > dashboard > chained filter", () => {
       cy.icon("filter").click();
       popover().within(() => {
         cy.findByText("Location").click();
-        cy.findByText("Matches exactly").click();
+        cy.findByText("Dropdown").click();
       });
 
       // connect that to people.state
@@ -184,7 +184,7 @@ describe("scenarios > dashboard > chained filter", () => {
         cy.findByText("AK").click();
         cy.findByText("Add filter").click();
       });
-      cy.findByText("Location - Starts with").click();
+      cy.findByText("Location starts with").click();
       popover().within(() => {
         cy.findByPlaceholderText(
           has_field_values === "search" ? "Search by City" : "Search the list",

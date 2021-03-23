@@ -71,7 +71,7 @@ describe("scenarios > dashboard", () => {
     // Adding location/state doesn't make much sense for this case,
     // but we're testing just that the filter is added to the dashboard
     cy.findByText("Location").click();
-    cy.findByText("Matches exactly").click();
+    cy.findByText("Dropdown").click();
     cy.findByText("Select…").click();
 
     popover().within(() => {
