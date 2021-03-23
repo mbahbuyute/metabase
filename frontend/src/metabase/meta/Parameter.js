@@ -70,8 +70,8 @@ export const PARAMETER_OPERATOR_TYPES = {
   string: [
     {
       operator: "=",
-      name: t`Matches exactly`,
-      description: t`Use a dropdown or search box to pick one or more exact matches.`,
+      name: t`Dropdown`,
+      description: t`Select one or more values from a list or search box.`,
     },
     {
       operator: "!=",
@@ -171,6 +171,8 @@ function buildOperatorSubtypeOptions({ section, operatorType, sectionName }) {
     combinedName:
       operatorType === "string" && option.operator === "="
         ? `${sectionName}`
+        : sectionName === "Number"
+        ? `${option.name}`
         : `${sectionName} ${option.name.toLowerCase()}`,
     type: `${section}/${option.operator}`,
   }));
