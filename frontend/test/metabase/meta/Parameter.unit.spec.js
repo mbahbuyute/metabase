@@ -256,9 +256,18 @@ describe("metabase/meta/Parameter", () => {
         value: "foo",
         target: "bar",
       });
+    });
+
+    it("should wrap number values in an array", () => {
+      expect(mapUIParameterToQueryParameter("number/=", [123], "bar")).toEqual({
+        type: "number/=",
+        value: [123],
+        target: "bar",
+      });
+
       expect(mapUIParameterToQueryParameter("number/=", 123, "bar")).toEqual({
         type: "number/=",
-        value: 123,
+        value: [123],
         target: "bar",
       });
     });

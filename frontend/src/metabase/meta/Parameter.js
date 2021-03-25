@@ -490,9 +490,15 @@ export function mapUIParameterToQueryParameter(type, value, target) {
   const [fieldType, maybeOperatorName] = splitType(type);
   const operatorName = getParameterOperatorName(maybeOperatorName);
 
-  if (["location", "category"].includes(fieldType)) {
+  if (fieldType === "location" || fieldType === "category") {
     return {
       type: `string/${operatorName}`,
+      value: [].concat(value),
+      target,
+    };
+  } else if (fieldType === "number") {
+    return {
+      type,
       value: [].concat(value),
       target,
     };
