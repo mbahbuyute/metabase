@@ -172,7 +172,7 @@ executors:
     working_directory: /home/circleci/metabase/metabase/
     docker:
       - image: circleci/clojure:lein-2.9.5-node-browsers
-      - image: metabase/qa-databases:mysql-8
+      - image: metabase/qa-databases:mysql-sample-8
 
 ########################################################################################################################
 #                                             MAP FRAGMENTS AND CACHE KEYS                                             #
