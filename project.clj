@@ -115,6 +115,7 @@
    [metabase/connection-pool "1.1.1"]                                 ; simple wrapper around C3P0. JDBC connection pools
    [metabase/saml20-clj "2.0.0"]                                      ; EE SAML integration
    [metabase/throttle "1.0.2"]                                        ; Tools for throttling access to API endpoints and other code pathways
+   [net.cgrand/macrovich "0.2.1"]                                     ; utils for writing macros for both Clojure & ClojureScript
    [net.redhogs.cronparser/cron-parser-core "3.4"                     ; describe Cron schedule in human-readable language
     :exclusions [org.slf4j/slf4j-api joda-time]]                      ; exclude joda time 2.3 which has outdated timezone information
    [net.sf.cssbox/cssbox "4.12" :exclusions [org.slf4j/slf4j-api]]    ; HTML / CSS rendering
@@ -140,7 +141,7 @@
    [org.yaml/snakeyaml "1.23"]                                        ; YAML parser (required by liquibase)
    [potemkin "0.4.5" :exclusions [riddley]]                           ; utility macros & fns
    [pretty "1.0.4"]                                                   ; protocol for defining how custom types should be pretty printed
-   [prismatic/schema "1.1.11"]                                        ; Data schema declaration and validation library
+   [prismatic/schema "1.1.12"]                                        ; Data schema declaration and validation library
    [redux "0.1.4"]                                                    ; Utility functions for building and composing transducers
    [riddley "0.2.0"]                                                  ; code walking lib -- used interally by Potemkin, manifold, etc.
    [ring/ring-core "1.8.0"]
@@ -151,6 +152,7 @@
                                  org.clojure/tools.logging
                                  org.clojure/tools.namespace
                                  honeysql]]
+   [user-agent "0.1.0"]                                               ; User-Agent string parser, for Login History page & elsewhere
    [weavejester/dependency "0.2.1"]                                   ; Dependency graphs and topological sorting
    ]
 
@@ -191,6 +193,12 @@
    {:source-paths ["enterprise/backend/src"]
     :test-paths   ["enterprise/backend/test"]}
 
+   :socket
+   {:dependencies
+    [[vlaaad/reveal "1.3.196"]]
+    :jvm-opts
+    ["-Dclojure.server.repl={:port 5555 :accept clojure.core.server/repl}"]}
+
    :dev
    {:source-paths ["dev/src" "local/src"]
     :test-paths   ["test" "backend/mbql/test" "shared/test"]
@@ -200,7 +208,10 @@
      [jonase/eastwood "0.3.11" :exclusions [org.clojure/clojure]]     ; to run Eastwood
      [methodical "0.9.4-alpha"]
      [pjstadig/humane-test-output "0.10.0"]
-     [ring/ring-mock "0.4.0"]]
+     [reifyhealth/specmonstah "2.0.0"]                                ; Generate fixtures to test huge databases
+     [ring/ring-mock "0.4.0"]
+     [talltale "0.5.4"]                                               ; Generate realistic data for fixtures
+     ]
 
     :plugins
     [[lein-environ "1.1.0"] ; easy access to environment variables
@@ -391,7 +402,7 @@
 
    :check-namespace-decls
    [:linters-common
-    {:plugins               [[lein-check-namespace-decls "1.0.2"]]
+    {:plugins               [[lein-check-namespace-decls "1.0.3"]]
      :check-namespace-decls {:prefix-rewriting false}}]
 
    :cloverage
