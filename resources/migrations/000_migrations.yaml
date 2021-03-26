@@ -8220,6 +8220,26 @@ databaseChangeLog:
                   name: user_id
               - column:
                   name: timestamp
+  # Add parameter columns to pulses so that dashboard subscriptions can have their own filters
+  - changeSet:
+      id: 298
+      author: tsmacdonald
+      changes:
+        - addColumn:
+            tableName: pulse
+            columns:
+              - column:
+                  name: parameters
+                  type: text
+                  constraints:
+                    nullable: true
+                    deferrable: false
+                    initiallyDeferred: false
+        - addNotNullConstraint:
+            columnDataType: text
+            columnName: parameters
+            defaultNullValue: '[]'
+            tableName: pulse
 
 # >>>>>>>>>> DO NOT ADD NEW MIGRATIONS BELOW THIS LINE! ADD THEM ABOVE <<<<<<<<<<
 

@@ -55,11 +55,11 @@
         (log/warn e (trs "Error running query for Card {0}" card-id))))))
 
 (defn- execute-dashboard-subscription-card
-  [owner-id dashboard dashcard card-or-id]
+  [owner-id dashboard dashcard card-or-id parameters]
   (try
     (let [card-id         (u/the-id card-or-id)
           card            (Card :id card-id)
-          param-id->param (u/key-by :id (:parameters dashboard))
+          param-id->param (u/key-by :id parameters)
           params          (for [mapping (:parameter_mappings dashcard)
                                 :when   (= (:card_id mapping) card-id)
                                 :let    [param (get param-id->param (:parameter_id mapping))]
@@ -79,13 +79,17 @@
     (catch Throwable e
         (log/warn e (trs "Error running query for Card {0}" card-or-id)))))
 
+(defn- the-parameters
+  [pulse dashboard]
+  (some seq (map :parameters [pulse dashboard])))
+
 (defn execute-dashboard
   "Execute all the cards in a dashboard for a Pulse"
   [{pulse-creator-id :creator_id, :as pulse} dashboard-or-id & {:as options}]
-  (let [dashboard-id (u/get-id dashboard-or-id)
+  (let [dashboard-id (u/the-id dashboard-or-id)
         dashboard (Dashboard :id dashboard-id)]
     (for [dashcard (db/select DashboardCard :dashboard_id dashboard-id, :card_id [:not= nil])]
-      (execute-dashboard-subscription-card pulse-creator-id dashboard dashcard (:card_id dashcard)))))
+      (execute-dashboard-subscription-card pulse-creator-id dashboard dashcard (:card_id dashcard) (the-parameters pulse dashboard)))))
 
 (defn- database-id [card]
   (or (:database_id card)
